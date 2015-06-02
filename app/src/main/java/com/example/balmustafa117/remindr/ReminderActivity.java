@@ -9,11 +9,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class ReminderActivity extends Activity {
     /** {@link CardScrollView} to use as the main content view. */
@@ -26,32 +31,27 @@ public class ReminderActivity extends Activity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
+        //ArrayList<Reminder> reminderArrayList = getIntent().getParcelableArrayListExtra("Reminder");
 
+        ArrayList<Reminder> reminderArrayList = new ArrayList<Reminder>();
+        Reminder r1 = getIntent().getParcelableExtra("r1");
+        Reminder r2 = getIntent().getParcelableExtra("r2");
+        Reminder r3 = getIntent().getParcelableExtra("r3");
+        reminderArrayList.add(r1);
+        reminderArrayList.add(r2);
+        reminderArrayList.add(r3);
 
         ArrayList<CardBuilder> cards = new ArrayList<CardBuilder>();
-
-        cards.add(0, new CardBuilder(this, CardBuilder.Layout.AUTHOR)
-                        .setText("7:00 AM - 10:00 PM")
-        );
-        cards.add(1, new CardBuilder(this, CardBuilder.Layout.AUTHOR)
-                        .setText("7:00 AM - 10:00 PM")
-        );
-        cards.add(2, new CardBuilder(this, CardBuilder.Layout.AUTHOR)
-                        .setText("7:00 AM - 10:00 PM")
-        );
-        cards.add(3, new CardBuilder(this, CardBuilder.Layout.AUTHOR)
-                        .setText("7:00 AM - 10:00 PM")
-        );
-        cards.add(4, new CardBuilder(this, CardBuilder.Layout.AUTHOR)
-                        .setText("7:00 AM - 10:00 PM")
-        );
-        cards.add(5, new CardBuilder(this, CardBuilder.Layout.AUTHOR)
-                        .setText("7:00 AM - 10:00 PM")
-        );
-        cards.add(6, new CardBuilder(this, CardBuilder.Layout.AUTHOR)
-                        .setText("7:00 AM - 10:00 PM")
-        );
-
+        android.util.Log.d("printSizeArrayList",reminderArrayList.size() + "");
+        for (int n = 0; n < reminderArrayList.size(); n++) {
+            cards.add(n, new CardBuilder(this, CardBuilder.Layout.AUTHOR)
+                            .setText(" " + reminderArrayList.get(n).getReminderMessage() +
+                                     " " + reminderArrayList.get(n).getDateCreated()     +
+                                     " " + reminderArrayList.get(n).getDateDue()         +
+                                     ".")
+            );
+            android.util.Log.d("test3","HelloN");
+        }
         mAdapter = new CardAdapter( cards );
         mCardScroller = new CardScrollView(this);
         mCardScroller.setAdapter(mAdapter);

@@ -10,12 +10,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+
 
 import com.example.balmustafa117.remindr.Reminder;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -34,6 +37,7 @@ public class MainActivity extends Activity {
     private CardScrollAdapter mAdapter;
     private CardScrollView mCardScroller;
     private View mView;
+    public ArrayList<Reminder> reminderArrayList;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -41,15 +45,27 @@ public class MainActivity extends Activity {
 
         ArrayList<CardBuilder> cards = new ArrayList<CardBuilder>();
 
-        cards.add(0, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Set Reminder"));
-
-        cards.add(1, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Reminders"));
-
+//java database connectivity!!!!
         mAdapter = new CardAdapter(cards);
         mCardScroller = new CardScrollView(this);
         mCardScroller.setAdapter(mAdapter);
         setContentView(mCardScroller);
         setCardScrollerListener();
+
+        //Sample Reminders
+        reminderArrayList = new ArrayList<Reminder>();
+//
+//        reminderArrayList.add(new Reminder("Pick up peaches."));
+//        reminderArrayList.add(new Reminder("Drop off laundry."));
+//        reminderArrayList.add(new Reminder("Do homework."));
+
+//        android.util.Log.d("blah", reminderArrayList.get(0).toString());
+
+
+        cards.add(0, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Set Reminder"));
+
+        cards.add(1, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Reminders"));
+
 
     }
 
@@ -58,12 +74,25 @@ public class MainActivity extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                android.util.Log.d("test1", position + "");
+                Reminder r1 = (new Reminder("Pick up peaches."));
+                Reminder r2 = (new Reminder("Drop off laundry."));
+                Reminder r3 = (new Reminder("Do homework."));
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(MainActivity.this, SetReminderActivity.class));
+//                        android.util.Log.d("blah2", reminderArrayList.get(0).toString());
+                        Intent intent = new Intent(MainActivity.this, SetReminderActivity.class);
+                        //intent.putExtra("Reminder", reminderArrayList);
+                        intent.putExtra("r1", r1);
+                        intent.putExtra("r2", r2);
+                        intent.putExtra("r3", r3);
+                        android.util.Log.d("blah","Hello");
+                        startActivity(intent);
                         break;
                     case 1:
-                        startActivity(new Intent(MainActivity.this, ReminderActivity.class));
+                        Intent intent2 = new Intent(MainActivity.this, ReminderActivity.class);
+                        intent2.putExtra("Reminder", reminderArrayList);
+                        startActivity(intent2);
                         break;
                 }
                 AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
