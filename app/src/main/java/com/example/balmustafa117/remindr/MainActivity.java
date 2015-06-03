@@ -55,7 +55,6 @@ public class MainActivity extends Activity {
 
         //Build cards
         cards.add(0, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Set Reminder"));
-
         cards.add(1, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Reminders"));
 
         //Sample Reminders

@@ -41,8 +41,8 @@ public class ReminderActivity extends Activity {
             String thisReminderMessage = thisReminder.getReminderMessage();
             Date thisReminderDateCreated = thisReminder.getDateCreated();
             Date thisReminderDateDue = thisReminder.getDateDue();
-
-            cards.add(n, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Message: " + thisReminderMessage + ". Created on: " + thisReminderDateCreated.toString() + ".                   Due on: " + thisReminderDateDue.toString() + "."));
+            String thisReminderLocation = thisReminder.getLocationCoordinatesString();
+            cards.add(n, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Message: " + thisReminderMessage + ". Created on: " + thisReminderDateCreated.toString() + ". Due on: " + thisReminderDateDue.toString() + "." + ", at location(la/lo): " + thisReminderLocation +"."));
         }
         mAdapter = new CardAdapter( cards );
         mCardScroller = new CardScrollView(this);

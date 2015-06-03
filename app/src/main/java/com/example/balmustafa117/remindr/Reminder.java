@@ -4,6 +4,7 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 /**
@@ -17,6 +18,7 @@ public class Reminder implements Parcelable {
     private Date dateDue;
     private double locationLatitude;
     private double locationLongtitude;
+    private Location location;
 
     //constructor
     public Reminder() {
@@ -24,7 +26,7 @@ public class Reminder implements Parcelable {
         dateCreated = new Date();
         dateDue = new Date();
         locationLatitude = 35.3333;
-        locationLongtitude = 61.11111;
+        locationLongtitude = -77.16886749999998;
     }
 
     public Reminder(String message, Date date, Date dateD, double latitude, double longtitude) {
@@ -39,8 +41,8 @@ public class Reminder implements Parcelable {
         reminderMessage = message;
         dateCreated = new Date();
         dateDue = new Date();
-        locationLatitude = 35.3333;
-        locationLongtitude = 61.11111;
+        locationLatitude = 38.8187477;
+        locationLongtitude = -77.16886749999998;
     }
 
     public Reminder(Parcel in) {
@@ -53,7 +55,7 @@ public class Reminder implements Parcelable {
     }
 
     public String toString(){
-        String s = ("Text: " + reminderMessage + ". Created on: " + getDateCreated() + ". Due on: " + getDateDue() + ", at location(la/lo): " + getLocationString());
+        String s = ("Text: " + reminderMessage + ". Created on: " + getDateCreated() + ". Due on: " + getDateDue() + ", at location(la/lo): " + getLocationCoordinatesString());
         return s;
 
     }
@@ -75,8 +77,8 @@ public class Reminder implements Parcelable {
         return ( dateDue);
     }
 
-    public String getLocationString(){
-        return ("" + locationLongtitude +","+locationLongtitude);
+    public String getLocationCoordinatesString(){
+        return ("" + locationLatitude +","+locationLongtitude);
     }
 
     @Override
