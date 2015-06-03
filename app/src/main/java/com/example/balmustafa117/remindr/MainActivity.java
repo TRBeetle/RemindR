@@ -37,6 +37,7 @@ public class MainActivity extends Activity {
     private CardScrollAdapter mAdapter;
     private CardScrollView mCardScroller;
     private View mView;
+
     public ArrayList<Reminder> reminderArrayList;
 
     @Override
@@ -45,27 +46,28 @@ public class MainActivity extends Activity {
 
         ArrayList<CardBuilder> cards = new ArrayList<CardBuilder>();
 
-//java database connectivity!!!!
+        //java database connectivity!!!!
         mAdapter = new CardAdapter(cards);
         mCardScroller = new CardScrollView(this);
         mCardScroller.setAdapter(mAdapter);
         setContentView(mCardScroller);
         setCardScrollerListener();
 
-        //Sample Reminders
-        reminderArrayList = new ArrayList<Reminder>();
-//
-//        reminderArrayList.add(new Reminder("Pick up peaches."));
-//        reminderArrayList.add(new Reminder("Drop off laundry."));
-//        reminderArrayList.add(new Reminder("Do homework."));
-
-//        android.util.Log.d("blah", reminderArrayList.get(0).toString());
-
-
+        //Build cards
         cards.add(0, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Set Reminder"));
 
         cards.add(1, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Reminders"));
 
+        //Sample Reminders
+        reminderArrayList = new ArrayList<Reminder>();
+
+        Reminder r1 = (new Reminder("(TEST)Pick up peaches"));
+        Reminder r2 = (new Reminder("(TEST)Drop off laundry"));
+        Reminder r3 = (new Reminder("(TEST)Do homework"));
+
+        reminderArrayList.add(r1);
+        reminderArrayList.add(r2);
+        reminderArrayList.add(r3);
 
     }
 
@@ -74,24 +76,17 @@ public class MainActivity extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                android.util.Log.d("test1", position + "");
-                Reminder r1 = (new Reminder("Pick up peaches."));
-                Reminder r2 = (new Reminder("Drop off laundry."));
-                Reminder r3 = (new Reminder("Do homework."));
                 switch (position) {
                     case 0:
-//                        android.util.Log.d("blah2", reminderArrayList.get(0).toString());
                         Intent intent = new Intent(MainActivity.this, SetReminderActivity.class);
-                        //intent.putExtra("Reminder", reminderArrayList);
-                        intent.putExtra("r1", r1);
-                        intent.putExtra("r2", r2);
-                        intent.putExtra("r3", r3);
-                        android.util.Log.d("blah","Hello");
+                        intent.putParcelableArrayListExtra("Reminder", reminderArrayList);
+                        android.util.Log.d("SReminderActivity","Success");
                         startActivity(intent);
                         break;
                     case 1:
                         Intent intent2 = new Intent(MainActivity.this, ReminderActivity.class);
-                        intent2.putExtra("Reminder", reminderArrayList);
+                        intent2.putParcelableArrayListExtra("Reminder", reminderArrayList);
+                        android.util.Log.d("SSetReminderActivity", "Success");
                         startActivity(intent2);
                         break;
                 }

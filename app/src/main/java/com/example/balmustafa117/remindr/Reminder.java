@@ -17,7 +17,6 @@ public class Reminder implements Parcelable {
     private Date dateDue;
     private double locationLatitude;
     private double locationLongtitude;
-    DateFormat df6 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     //constructor
     public Reminder() {
@@ -48,14 +47,16 @@ public class Reminder implements Parcelable {
         reminderMessage = in.readString();
         dateCreated = new Date(in.readLong());
         dateDue = new Date(in.readLong());
+        locationLatitude = in.readDouble();
         locationLongtitude = in.readDouble();
-        locationLongtitude = in.readDouble();
-        //String s = in.readString();
-        //System.out.println( s ) ;
-       // df6 = new SimpleDateFormat(s);
 
     }
 
+    public String toString(){
+        String s = ("Text: " + reminderMessage + ". Created on: " + getDateCreated() + ". Due on: " + getDateDue() + ", at location(la/lo): " + getLocationString());
+        return s;
+
+    }
 
     //methods
     public void setReminderMessage(String newMessage) {
@@ -66,14 +67,16 @@ public class Reminder implements Parcelable {
         return reminderMessage;
     }
 
-    public String getDateCreated() {
-        String str5 = df6.format(dateCreated);
-        return ("Created on " + str5);
+    public Date getDateCreated() {
+        return ( dateCreated);
     }
 
-    public String getDateDue() {
-        String str6 = df6.format(dateDue);
-        return ("Due on " + str6);
+    public Date getDateDue() {
+        return ( dateDue);
+    }
+
+    public String getLocationString(){
+        return ("" + locationLongtitude +","+locationLongtitude);
     }
 
     @Override
@@ -88,17 +91,17 @@ public class Reminder implements Parcelable {
         dest.writeLong(dateDue.getTime());
         dest.writeDouble(locationLatitude);
         dest.writeDouble(locationLongtitude);
-        //dest.writeString(df6.toString());
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Reminder createFromParcel(Parcel in) {
             return new Reminder(in);
         }
-
         public Reminder[] newArray(int size) {
             return new Reminder[size];
         }
     };
+
+
 
 }

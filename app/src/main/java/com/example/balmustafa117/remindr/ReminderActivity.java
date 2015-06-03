@@ -31,26 +31,18 @@ public class ReminderActivity extends Activity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        //ArrayList<Reminder> reminderArrayList = getIntent().getParcelableArrayListExtra("Reminder");
-
-        ArrayList<Reminder> reminderArrayList = new ArrayList<Reminder>();
-        Reminder r1 = getIntent().getParcelableExtra("r1");
-        Reminder r2 = getIntent().getParcelableExtra("r2");
-        Reminder r3 = getIntent().getParcelableExtra("r3");
-        reminderArrayList.add(r1);
-        reminderArrayList.add(r2);
-        reminderArrayList.add(r3);
-
+        ArrayList<Reminder> reminderArrayList = getIntent().getParcelableArrayListExtra("Reminder");
         ArrayList<CardBuilder> cards = new ArrayList<CardBuilder>();
         android.util.Log.d("printSizeArrayList",reminderArrayList.size() + "");
+
         for (int n = 0; n < reminderArrayList.size(); n++) {
-            cards.add(n, new CardBuilder(this, CardBuilder.Layout.AUTHOR)
-                            .setText(" " + reminderArrayList.get(n).getReminderMessage() +
-                                     " " + reminderArrayList.get(n).getDateCreated()     +
-                                     " " + reminderArrayList.get(n).getDateDue()         +
-                                     ".")
-            );
-            android.util.Log.d("test3","HelloN");
+
+            Reminder thisReminder = reminderArrayList.get(n);
+            String thisReminderMessage = thisReminder.getReminderMessage();
+            Date thisReminderDateCreated = thisReminder.getDateCreated();
+            Date thisReminderDateDue = thisReminder.getDateDue();
+
+            cards.add(n, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Message: " + thisReminderMessage + ". Created on: " + thisReminderDateCreated.toString() + ".                   Due on: " + thisReminderDateDue.toString() + "."));
         }
         mAdapter = new CardAdapter( cards );
         mCardScroller = new CardScrollView(this);
