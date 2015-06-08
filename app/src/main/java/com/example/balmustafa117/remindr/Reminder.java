@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import android.location.Location;
+import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
 /**

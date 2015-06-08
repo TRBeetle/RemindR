@@ -4,6 +4,7 @@ import com.google.android.glass.media.Sounds;
 import com.google.android.glass.widget.CardBuilder;
 import com.google.android.glass.widget.CardScrollAdapter;
 import com.google.android.glass.widget.CardScrollView;
+import android.content.ServiceConnection;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,11 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
-
-import com.example.balmustafa117.remindr.Reminder;
-
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -40,6 +36,7 @@ public class MainActivity extends Activity {
 
     public ArrayList<Reminder> reminderArrayList;
 
+
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -54,19 +51,22 @@ public class MainActivity extends Activity {
         setCardScrollerListener();
 
         //Build cards
-        cards.add(0, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Set Reminder"));
-        cards.add(1, new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Reminders"));
+        cards.add(0, new CardBuilder(this, CardBuilder.Layout.MENU).setText("Set Reminder").setFootnote("Create a new Reminder").setIcon(R.drawable.ic_new_logo));
+        cards.add(1, new CardBuilder(this, CardBuilder.Layout.MENU).setText("Reminders").setFootnote("View active Reminders").setIcon(R.drawable.ic_list));
 
         //Sample Reminders
         reminderArrayList = new ArrayList<Reminder>();
 
-        Reminder r1 = (new Reminder("(TEST)Pick up peaches"));
-        Reminder r2 = (new Reminder("(TEST)Drop off laundry"));
-        Reminder r3 = (new Reminder("(TEST)Do homework"));
+        Reminder r1 = (new Reminder("'Buy Shrimp Instant Noodles'     "));
+        Reminder r2 = (new Reminder("'Do laundry'                                 "));
+        Reminder r4 = (new Reminder("'Finish Linear Algebra HW 3'      "));
+        Reminder r3 = (new Reminder("'Work on quad-copter project'        "));
 
         reminderArrayList.add(r1);
         reminderArrayList.add(r2);
         reminderArrayList.add(r3);
+        reminderArrayList.add(r4);
+
 
     }
 
@@ -79,8 +79,8 @@ public class MainActivity extends Activity {
                     case 0:
                         Intent intent = new Intent(MainActivity.this, SetReminderActivity.class);
                         intent.putParcelableArrayListExtra("Reminder", reminderArrayList);
-                        android.util.Log.d("SReminderActivity","Success");
-                        startActivity(intent);
+                        android.util.Log.d("SReminderActivity", "Success");
+                        startActivityForResult(intent, 1);
                         break;
                     case 1:
                         Intent intent2 = new Intent(MainActivity.this, ReminderActivity.class);
@@ -105,5 +105,16 @@ public class MainActivity extends Activity {
     protected void onPause() {
         mCardScroller.deactivate();
         super.onPause();
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                reminderArrayList = data.getParcelableArrayListExtra("result");
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 }
