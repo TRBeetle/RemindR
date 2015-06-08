@@ -51,8 +51,10 @@ public class MainActivity extends Activity {
         setCardScrollerListener();
 
         //Build cards
-        cards.add(0, new CardBuilder(this, CardBuilder.Layout.MENU).setText("Set Reminder").setFootnote("Create a new Reminder").setIcon(R.drawable.ic_new_logo));
-        cards.add(1, new CardBuilder(this, CardBuilder.Layout.MENU).setText("Reminders").setFootnote("View active Reminders").setIcon(R.drawable.ic_list));
+        cards.add(0, new CardBuilder(this, CardBuilder.Layout.MENU).setText("Set Reminder").setFootnote("Create a new Reminder").setIcon(R.drawable.ic_new));
+        cards.add(1, new CardBuilder(this, CardBuilder.Layout.MENU).setText("Reminders").setFootnote("View all active Reminders").setIcon(R.drawable.ic_list));
+        cards.add(2, new CardBuilder(this, CardBuilder.Layout.MENU).setText("Edit Reminders").setFootnote("Change or delete active Reminders").setIcon(R.drawable.ic_edit));
+        cards.add(3, new CardBuilder(this, CardBuilder.Layout.MENU).setText("About RemindR").setFootnote("Made by Mustafa Bal at TJHSST"));
 
         //Sample Reminders
         reminderArrayList = new ArrayList<Reminder>();
@@ -88,6 +90,11 @@ public class MainActivity extends Activity {
                         android.util.Log.d("SSetReminderActivity", "Success");
                         startActivity(intent2);
                         break;
+                    case 2:
+                        Intent intent3 = new Intent(MainActivity.this, EditActivity.class);
+                        intent3.putParcelableArrayListExtra("Reminder", reminderArrayList);
+                        android.util.Log.d("EditActivity", "Success");
+                        startActivity(intent3);
                 }
                 AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
                 am.playSoundEffect(Sounds.TAP);
